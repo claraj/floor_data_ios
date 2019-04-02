@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E7911C342253121800891426 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7911C332253121800891426 /* AppDelegate.swift */; };
-		E7911C362253121800891426 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7911C352253121800891426 /* ViewController.swift */; };
+		E7911C362253121800891426 /* FloorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7911C352253121800891426 /* FloorTableViewController.swift */; };
 		E7911C392253121800891426 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7911C372253121800891426 /* Main.storyboard */; };
 		E7911C3C2253121800891426 /* FloorData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E7911C3A2253121800891426 /* FloorData.xcdatamodeld */; };
 		E7911C3E2253121900891426 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7911C3D2253121900891426 /* Assets.xcassets */; };
@@ -37,7 +37,7 @@
 /* Begin PBXFileReference section */
 		E7911C302253121800891426 /* FloorData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FloorData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7911C332253121800891426 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E7911C352253121800891426 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E7911C352253121800891426 /* FloorTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorTableViewController.swift; sourceTree = "<group>"; };
 		E7911C382253121800891426 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E7911C3B2253121800891426 /* FloorData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FloorData.xcdatamodel; sourceTree = "<group>"; };
 		E7911C3D2253121900891426 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -100,7 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				E7911C332253121800891426 /* AppDelegate.swift */,
-				E7911C352253121800891426 /* ViewController.swift */,
+				E7911C352253121800891426 /* FloorTableViewController.swift */,
 				E7911C372253121800891426 /* Main.storyboard */,
 				E7911C3D2253121900891426 /* Assets.xcassets */,
 				E7911C3F2253121900891426 /* LaunchScreen.storyboard */,
@@ -260,7 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7911C3C2253121800891426 /* FloorData.xcdatamodeld in Sources */,
-				E7911C362253121800891426 /* ViewController.swift in Sources */,
+				E7911C362253121800891426 /* FloorTableViewController.swift in Sources */,
 				E7911C342253121800891426 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
