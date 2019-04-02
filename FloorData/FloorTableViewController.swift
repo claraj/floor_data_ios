@@ -10,13 +10,12 @@ import UIKit
 
 class FloorTableViewController: UITableViewController {
 
-    var floors: [NSManagedObject] = []
+    var floors: [Floor] = []
     
     var managedContext: NSManagedObjectContext?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
@@ -53,7 +52,7 @@ class FloorTableViewController: UITableViewController {
     
     
     func loadFloors() {
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Floor")
+        let fetchRequest = NSFetchRequest<Floor>(entityName: "Floor")
         
         do {
             floors = try managedContext!.fetch(fetchRequest)
@@ -65,17 +64,15 @@ class FloorTableViewController: UITableViewController {
     
     func addFloor() {
         
-        let floorEntity = NSEntityDescription.entity(forEntityName: "Floor", in: managedContext!)!
-        
-        let floor = NSManagedObject(entity: floorEntity, insertInto: managedContext)
+        let floor = Floor(context: managedContext!)
         
         // Random values for type and price
         // The Core Data side doesn't care where the data comes from.
-        let price = (20...30).randomElement()
+        let price = Float((20...30).randomElement()!)
         let type = ["Carpet", "Wood", "Tile"].randomElement()
         
-        floor.setValue(type, forKeyPath: "type")
-        floor.setValue(price, forKeyPath: "price")
+        floor.type = type
+        floor.price = price
         
         do {
             try managedContext!.save()
@@ -90,10 +87,8 @@ class FloorTableViewController: UITableViewController {
         guard let selectedPath = tableView.indexPathForSelectedRow  else { return }
         let row = selectedPath.row
         
-        let floorEntity = floors[row]
-        let price = floorEntity.value(forKeyPath: "price") as! Int
-        let newPrice = price + 1
-        floorEntity.setValue(newPrice, forKey: "price")
+        let floor = floors[row]
+        floor.price += 1
         
         do {
             try managedContext!.save()
@@ -108,9 +103,9 @@ class FloorTableViewController: UITableViewController {
         guard let selectedPath = tableView.indexPathForSelectedRow else { return }
         let row = selectedPath.row
         
-        let floorEntity = floors[row]
+        let floor = floors[row]
         
-        managedContext!.delete(floorEntity)
+        managedContext!.delete(floor)
         
         do {
             try managedContext!.save()
@@ -123,12 +118,10 @@ class FloorTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FloorCell")!
         
-        let floorEntity = floors[indexPath.row]
-        let type = floorEntity.value(forKey: "type") as! String
-        let price = floorEntity.value(forKey: "price") as! Float
+        let floor = floors[indexPath.row]
     
-        cell.textLabel?.text = type
-        cell.detailTextLabel?.text = "$\(price) per square foot"
+        cell.textLabel?.text = floor.type
+        cell.detailTextLabel?.text = "$\(floor.price) per square foot"
     
         return cell
     }
