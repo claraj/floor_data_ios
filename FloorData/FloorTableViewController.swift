@@ -5,8 +5,9 @@
 //  Created by student1 on 4/1/19.
 //  Copyright © 2019 clara. All rights reserved.
 //
-import CoreData
+
 import UIKit
+import CoreData
 
 class FloorTableViewController: UITableViewController {
 
@@ -17,39 +18,31 @@ class FloorTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        
-        managedContext = appDelegate.persistentContainer.viewContext
-        
-        refreshTable()
-    }
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        managedContext = appDelegate!.persistentContainer.viewContext
     
+        loadFloors()
+    }
     
     @IBAction func addFloor(_ sender: Any) {
         addFloor()
         refreshTable()
     }
     
-    
     @IBAction func deleteFloor(_ sender: Any) {
         deleteSelectedFloor()
         refreshTable()
     }
     
-    
     @IBAction func increasePrice(_ sender: Any) {
-        increasePriceSelectedFloor()
+        increasePriceForSelectedFloor()
         refreshTable()
     }
-    
     
     func refreshTable() {
         loadFloors()
         tableView.reloadData()
     }
-    
     
     func loadFloors() {
         let fetchRequest = NSFetchRequest<Floor>(entityName: "Floor")
@@ -60,14 +53,11 @@ class FloorTableViewController: UITableViewController {
             print("Error fetching data because \(error)")
         }
     }
-
     
     func addFloor() {
-        
         let floor = Floor(context: managedContext!)
         
         // Random values for type and price
-        // The Core Data side doesn't care where the data comes from.
         let price = Float((20...30).randomElement()!)
         let type = ["Carpet", "Wood", "Tile"].randomElement()
         
@@ -80,26 +70,8 @@ class FloorTableViewController: UITableViewController {
             print("Error saving, \(error)")
         }
     }
-
-    
-    func increasePriceSelectedFloor() {
-        
-        guard let selectedPath = tableView.indexPathForSelectedRow  else { return }
-        let row = selectedPath.row
-        
-        let floor = floors[row]
-        floor.price += 1
-        
-        do {
-            try managedContext!.save()
-        } catch {
-            print("Error updating price because \(error)")
-        }
-    }
-    
     
     func deleteSelectedFloor() {
-        
         guard let selectedPath = tableView.indexPathForSelectedRow else { return }
         let row = selectedPath.row
         
@@ -115,21 +87,30 @@ class FloorTableViewController: UITableViewController {
     }
     
     
+    func increasePriceForSelectedFloor() {
+        guard let selectedPath = tableView.indexPathForSelectedRow  else { return }
+        let row = selectedPath.row
+        
+        let floor = floors[row]
+        floor.price += 1
+        
+        do {
+            try managedContext!.save()
+        } catch {
+            print("Error updating price because \(error)")
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FloorCell")!
-        
         let floor = floors[indexPath.row]
-    
         cell.textLabel?.text = floor.type
         cell.detailTextLabel?.text = "$\(floor.price) per square foot"
-    
         return cell
     }
-
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return floors.count
     }
-    
 }
 
